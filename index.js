@@ -5,10 +5,10 @@ const app = express();
 
 morgan.token("custom", function (req, res) {
 	const method = req.method;
-	const path = req.route.path;
+	// const path = req.route.path;
 	const code = res.statusCode;
 	const contentLength = res._contentLength;
-	return `${method} ${path} ${code} ${contentLength}`;
+	return `${method} ${code} ${contentLength}`;
 });
 
 morgan.token("body", function (req, res) {
@@ -18,7 +18,7 @@ morgan.token("body", function (req, res) {
 		return body;
 	}
 });
-
+app.use(express.static('build'));
 app.use(morgan(":custom - :response-time ms :body"));
 app.use(cors());
 app.use(express.json());
